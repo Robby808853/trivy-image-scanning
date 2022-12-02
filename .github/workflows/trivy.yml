@@ -35,26 +35,26 @@ jobs:
     - name: Pull the docker node image
       run:  docker pull node:latest
       
-#     - name: Run Trivy vulnerability scanner
-#       uses: aquasecurity/trivy-action@master
-#       with:
-#         image-ref: 'elastic/logstash:7.13.3'
-#         format: 'table'
-#         exit-code: '1'
-#         ignore-unfixed: true
-#         vuln-type: 'os,library'
-#         severity: 'CRITICAL,HIGH'
-      
-    - name: Run Trivy vulnerability scanner node image
+    - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'node:latest'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+        image-ref: 'elastic/logstash:7.13.3'
+        format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+      
+#     - name: Run Trivy vulnerability scanner node image
+#       uses: aquasecurity/trivy-action@master
+#       with:
+#         image-ref: 'node:latest'
+#         format: 'sarif'
+#         output: 'trivy-results.sarif'
+#         exit-code: '1'
+#         ignore-unfixed: true
+#         vuln-type: 'os,library'
+#         severity: 'CRITICAL,HIGH'
 
     - name: Upload Trivy scan results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v2
@@ -62,8 +62,8 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
         
-    - name: push
-      run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
-          docker push node:latest
+#     - name: push
+#       run: |
+#           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
+#           docker push node:latest
       
